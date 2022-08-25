@@ -323,29 +323,29 @@ rabbitmq:
   installdep:
     enable: false
   endpoint:
-    address: <rabbitmq-release-name>-rabbitmq.default.svc.cluster.local
+    address: my-release2-rabbitmq.default.svc.cluster.local
     port: 5672
     user: rabbitmq
     apiport: 15672
     apiuser: rabbitmq
-    password:
+    password: owo
   ## Virtual hosts provide logical grouping and separation of resources.
   ## ref: https://www.rabbitmq.com/vhosts.html
   vhost: analyzer
 
 postgresql:
-  SecretName: ""
+  SecretName: postgresql1-postgresql
   installdep:
     enable: false
   endpoint:
-    address: <postgresql-release-name>-postgresql.default.svc.cluster.local
+    address: postgresql1-postgresql.default.svc.cluster.local
     port: 5432
     user: rpuser
     dbName: reportportal
     ## Whether or not to use SSL
     ssl: disable
     # ssl: disable / require
-    password:
+    password: owo 
     ## Number of database connections
     connections: 
 
@@ -362,11 +362,11 @@ minio:
   enabled: true
   installdep:
     enable: false
-  endpoint: http://<minio-release-name>-minio.default.svc.cluster.local:9000
-  endpointshort: <minio-release-name>-minio.default.svc.cluster.local:9000
+  endpoint: http:/-/miniominio.default.svc.cluster.local:9000
+  endpointshort: minio-minio.default.svc.cluster.local:9000
   region: ""
-  accesskey: <minio-accesskey>
-  secretkey: <minio-secretkey>
+  accesskey: user
+  secretkey: user1
   accesskeyName: "access-key"
   secretkeyName: "secret-key"
   bucketPrefix: ""
