@@ -323,18 +323,18 @@ rabbitmq:
   installdep:
     enable: false
   endpoint:
-    address: my-release2-rabbitmq.default.svc.cluster.local
+    address: rabbitmq-rabbitmq.default.svc.cluster.local
     port: 5672
     user: rabbitmq
     apiport: 15672
     apiuser: rabbitmq
-    password: owo
+    password: rabbit
   ## Virtual hosts provide logical grouping and separation of resources.
   ## ref: https://www.rabbitmq.com/vhosts.html
   vhost: analyzer
 
 postgresql:
-  SecretName: postgresql1-postgresql
+  SecretName: 
   installdep:
     enable: false
   endpoint:
