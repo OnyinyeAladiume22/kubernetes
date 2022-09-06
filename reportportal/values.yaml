@@ -338,7 +338,8 @@ postgresql:
   installdep:
     enable: false
   endpoint:
-    address: postgresql1-postgresql.default.svc.cluster.local
+    address: 10.97.61.61
+    # address: postgresql1-postgresql.default.svc.cluster.local
     port: 5432
     user: rpuser
     dbName: reportportal
@@ -353,7 +354,7 @@ elasticsearch:
   secretName: ""
   installdep:
     enable: false
-  endpoint: http://elasticsearch-master.default.svc.cluster.local:9200
+  endpoint: elasticsearch-master.default.svc.cluster.local:9200
   user: elastic
   password:
 
@@ -362,7 +363,7 @@ minio:
   enabled: true
   installdep:
     enable: false
-  endpoint: http:/-/miniominio.default.svc.cluster.local:9000
+  endpoint: minio-minio.default.svc.cluster.local:9000
   endpointshort: minio-minio.default.svc.cluster.local:9000
   region: ""
   accesskey: user
