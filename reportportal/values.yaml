@@ -363,11 +363,11 @@ minio:
   enabled: true
   installdep:
     enable: false
-  endpoint: minio-minio.default.svc.cluster.local:9000
-  endpointshort: minio-minio.default.svc.cluster.local:9000
+  endpoint: minio2-minio.default.svc.cluster.local:9000
+  endpointshort: minio2-minio.default.svc.cluster.local:9000
   region: ""
-  accesskey: user
-  secretkey: user1
+  accesskey: minio-access-key
+  secretkey: minio-secret-key
   accesskeyName: "access-key"
   secretkeyName: "secret-key"
   bucketPrefix: ""
@@ -424,12 +424,12 @@ rp:
   healthEndpoint: "/health"
 
 # Extra init containers to e.g. wait for minio
-extraInitContainers: {}
-  # - name: "wait-for-minio"
-  #   image: "busybox"
-  #   imagePullPolicy: "IfNotPresent"
-  #   command:
-  #     - sh
-  #     - "-c"
-  #     - "for i in `seq 1 300`; do sleep 1; if wget http://<minio-release-name>-minio.default.svc.cluster.local:9000/minio/health/live -q -O /dev/null ; then exit 0; fi; done; exit 1"
+# extraInitContainers: {}
+#   - name: "wait-for-minio"
+#     image: "busybox"
+#     imagePullPolicy: "IfNotPresent"
+#     command:
+#       - sh
+#       - "-c"
+#       - "for i in `seq 1 300`; do sleep 1; if wget http://minio-minio.default.svc.cluster.local:9000/minio/health/live -q -O /dev/null ; then exit 0; fi; done; exit 1"
 
