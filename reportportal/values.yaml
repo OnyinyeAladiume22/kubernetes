@@ -114,7 +114,12 @@ serviceapi:
     initialDelaySeconds: 30
     periodSeconds: 20
     timeoutSeconds: 3
-    failureThreshold: 20
+    failureThreshold: 5
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 20
+    timeoutSeconds: 3
+    failureThreshold: 5
   resources:
     requests:
       cpu: 500m
@@ -323,12 +328,12 @@ rabbitmq:
   installdep:
     enable: false
   endpoint:
-    address: rabbitmq-rabbitmq.default.svc.cluster.local
+    address: rabbitmq2-rabbitmq.default.svc.cluster.local
     port: 5672
     user: rabbitmq
     apiport: 15672
     apiuser: rabbitmq
-    password: rabbit
+    password: 
   ## Virtual hosts provide logical grouping and separation of resources.
   ## ref: https://www.rabbitmq.com/vhosts.html
   vhost: analyzer
