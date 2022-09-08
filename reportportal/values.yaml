@@ -44,7 +44,7 @@ uat:
   podAnnotations: {}
   ## jvmArgs
   ## If you need to use a custom java keystore you can use it through jvmArgs
-  ## eg. : -Djavax.net.ssl.trustStore=/etc/secret-volume/custom-pki.jks 
+  ## eg. : -Djavax.net.ssl.trustStore=/etc/secret-volume/custom-pki.jks
   jvmArgs: "-Djava.security.egd=file:/dev/./urandom -XX:MinRAMPercentage=60.0 -XX:MaxRAMPercentage=90.0"
   ## External environment variables
   ##
@@ -69,9 +69,9 @@ uat:
   ## keytool -genkeypair -storetype jks -alias todelete -keypass changeit -storepass changeit -keystore custom-pki.jks -dname "CN=Developer, OU=Department, O=Company, L=City, ST=State, C=CA"
   ## keytool -delete -alias todelete -storepass changeit -keystore custom-pki.jks
   ## keytool -list -keystore custom-pki.jks -storepass changeit
-  ## 
+  ##
   ## Generate base64 data and paste it in your values.yaml :
-  ## cat custom-pki.jks | base64 -w 
+  ## cat custom-pki.jks | base64 -w
   secret:
     enabled: false
     mountPath: /etc/secret-volume
@@ -127,7 +127,7 @@ serviceapi:
     limits:
       cpu: 1000m
       memory: 2048Mi
-  jvmArgs: "-Djava.security.egd=file:/dev/./urandom -XX:+UseG1GC -XX:MinRAMPercentage=60.0 -XX:InitiatingHeapOccupancyPercent=70 -XX:MaxRAMPercentage=90.0 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp"
+  jvmArgs: "-Djava.security.egd=file:/dev/./urandom -Dlogging.level.com.epam.ta.reportportal=TRACE -XX:+UseG1GC -XX:MinRAMPercentage=60.0 -XX:InitiatingHeapOccupancyPercent=70 -XX:MaxRAMPercentage=90.0 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp"
   ## Number of queues
   ## Where "totalNumber" is the total number of queues
   ## Сalculation formula: perPodNumber = totalNumber / serviceapi.replicaCount
@@ -328,18 +328,18 @@ rabbitmq:
   installdep:
     enable: false
   endpoint:
-    address: rabbitmq2-rabbitmq.default.svc.cluster.local
+    address: rabbitmq2.default.svc.cluster.local
     port: 5672
     user: rabbitmq
     apiport: 15672
     apiuser: rabbitmq
-    password: 
+    password: rabbitmq
   ## Virtual hosts provide logical grouping and separation of resources.
   ## ref: https://www.rabbitmq.com/vhosts.html
   vhost: analyzer
 
 postgresql:
-  SecretName: 
+  SecretName:
   installdep:
     enable: false
   endpoint:
@@ -351,9 +351,9 @@ postgresql:
     ## Whether or not to use SSL
     ssl: disable
     # ssl: disable / require
-    password: owo 
+    password: owo
     ## Number of database connections
-    connections: 
+    connections:
 
 elasticsearch:
   secretName: ""
@@ -368,11 +368,11 @@ minio:
   enabled: true
   installdep:
     enable: false
-  endpoint: minio2-minio.default.svc.cluster.local:9000
-  endpointshort: minio2-minio.default.svc.cluster.local:9000
+  endpoint: http://minio2.default.svc.cluster.local:9000
+  endpointshort: minio2.default.svc.cluster.local:9000
   region: ""
-  accesskey: minio-access-key
-  secretkey: minio-secret-key
+  accesskey: accesskeypass
+  secretkey: secretkeypass
   accesskeyName: "access-key"
   secretkeyName: "secret-key"
   bucketPrefix: ""
@@ -437,4 +437,3 @@ rp:
 #       - sh
 #       - "-c"
 #       - "for i in `seq 1 300`; do sleep 1; if wget http://minio-minio.default.svc.cluster.local:9000/minio/health/live -q -O /dev/null ; then exit 0; fi; done; exit 1"
-
