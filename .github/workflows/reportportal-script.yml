@@ -37,6 +37,10 @@ jobs:
 
       - name: Permissions
         run: chmod 600 ~/.kube/config
+
+      - name: Testing
+        run: kubectl config view --raw >~/.kube/config
+        
        # Nginx Install
       - name: Install nginx-ingress
         run: 
