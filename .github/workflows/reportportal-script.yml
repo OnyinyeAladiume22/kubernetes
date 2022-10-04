@@ -1,0 +1,64 @@
+# This is a workflow file on deploying a Reportportal Instance assuming you have AWS CLI installed.
+
+name: ReportPortalDeploy
+
+# Controls when the workflow will run
+on:
+  pull_request:
+  push:
+    branches:
+      - test
+  
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        
+      # 1. Set your credentials first
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with: 
+          aws-access-key-id: ${{ secrets.AWS_RP_SERVICE_KEY_ID_463602674264 }}
+          aws-secret-access-key: ${{ secrets.AWS_RP_SERVICE_KEY_SECRET_463602674264 }}
+          role-to-assume: ${{secrets.AWS_RP_SERVICE_ASSUME_ROLE_ARN_463602674264}}
+          role-duration-seconds: 900
+          aws-region: us-east-1
+
+      # AWS EKS Target
+      - name: EKS Target Cluster
+        run: 
+            aws eks update-kubeconfig --region us-east-1 --name test 
+
+       # Nginx Install
+      - name: Install nginx-ingress
+        run: 
+            helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx && helm repo update |
+            helm install nginx-ingress ingress-nginx/ingress-nginx --version 3.36.0  --namespace <namespace>
+
+       # Elastic-search install
+      - name: Elastic search
+        run: 
+            helm repo add elastic https://helm.elastic.co && helm repo update |
+            helm install elastic-search ./reportportal/charts/elasticsearch-7.6.1.tgz
+
+      # RabbitMQ install
+      - name: RabbitMQ
+        run: helm install rabbitmq --set auth.username=rabbitmq,auth.password=rabbitmq,replicaCount=1 ./reportportal/charts/rabbitmq-7.5.6.tgz
+
+      # PostgresSQL install
+      - name: PostgresSQL
+        run: helm install postgressql --set postgresqlUsername=rpuser,postgresqlPassword=postgresql,postgresqlDatabase=reportportal,postgresqlPostgresPassword=<postgres_password> -f ./reportportal/postgresql/values.yaml ./reportportal/charts/postgresql-10.9.4.tgz
+      # Minio Install
+      - name: Minio
+        run: helm install minio --set accessKey.password=access-key,secretKey.password=secretkey,persistence.size=40Gi ./reportportal/charts/minio-7.1.9.tgz
+        
+      # Deploy the ReportPortal Helm Chart
+      - name: Deploying RP chart
+        run: helm package ./reportportal/
+             helm install reportportal --set postgresql.SecretName=postgresql-postgresql,rabbitmq.SecretName=rabbitmq-rabbitmq,minio.secretName=minio ./reportportal-5.7.2.tgz
