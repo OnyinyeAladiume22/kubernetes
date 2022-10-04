@@ -35,6 +35,8 @@ jobs:
         run: 
             aws eks update-kubeconfig --region us-east-1 --name test 
 
+      - name: Permissions
+        run: chmod 600 ~/.kube/config
        # Nginx Install
       - name: Install nginx-ingress
         run: 
