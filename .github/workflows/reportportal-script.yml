@@ -34,7 +34,10 @@ jobs:
 
       - name: Permissions
         run: chmod 600 ~/.kube/config
-
+      - name: Verifying kubectl
+        uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
        # Nginx Install
       - name: Install nginx-ingress
         run: 
