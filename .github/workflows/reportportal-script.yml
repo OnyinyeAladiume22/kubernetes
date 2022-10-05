@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - test
-  #
+  
   workflow_dispatch:
 
 jobs:
@@ -38,14 +38,6 @@ jobs:
       - name: Permissions
         run: chmod 600 ~/.kube/config
 
-      # - uses: peymanmortazavi/eks-helm-deploy@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_RP_SERVICE_KEY_ID_463602674264 }}
-      #     aws-secret-access-key: ${{ secrets.AWS_RP_SERVICE_KEY_SECRET_463602674264 }}
-      #     aws-region: us-east-1
-      #     cluster-name: test
-      #     namespace: rp-test
-      #     name: nginx-ingress
 
        # Nginx Install
       - name: Install nginx-ingress
