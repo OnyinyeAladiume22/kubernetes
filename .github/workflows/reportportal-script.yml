@@ -35,6 +35,9 @@ jobs:
       - name: Permissions
         run: chmod 600 ~/.kube/config
 
+      - name: Testing configurations
+        run:  kubectl get svc
+        
        # Nginx Install
       - name: Install nginx-ingress
         run: 
