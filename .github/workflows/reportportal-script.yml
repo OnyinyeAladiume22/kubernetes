@@ -42,7 +42,7 @@ jobs:
 
       - name: Testing Cluster Access
         run: |
-          kubectl get pods -A
+          kubectl get svc
 
       - name: Installing Helm Chart
         run: |
