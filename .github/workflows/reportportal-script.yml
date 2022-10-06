@@ -34,10 +34,26 @@ jobs:
 
       - name: Permissions
         run: chmod 600 ~/.kube/config
-      - name: Verifying kubectl
-        uses: tale/kubectl-action@v1
+      
+      - name: Kubectl tool installer
+        uses: Azure/setup-kubectl@v3
         with:
-          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+          version: latest
+
+      - name: Testing Cluster Access
+        run: |
+          kubectl get pods -A
+
+      - name: Installing Helm Chart
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
+      - name: Test Helm
+        run: |
+          helm version
+          helm ls -A
        # Nginx Install
       - name: Install nginx-ingress
         run: 
