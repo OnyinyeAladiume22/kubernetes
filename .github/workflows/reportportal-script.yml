@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,9 +31,6 @@ jobs:
       - name: EKS Target Cluster
         run: 
             aws eks update-kubeconfig --region us-east-1 --name test 
-
-      - name: Permissions
-        run: chmod 600 ~/.kube/config
       
       - name: Kubectl tool installer
         uses: Azure/setup-kubectl@v3
