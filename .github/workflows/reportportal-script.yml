@@ -37,7 +37,7 @@ jobs:
         with:
           version: v1.24.0
       - name: Kubectl version
-        run: kubectl version
+        run: kubectl version --short
       - name: Testing Cluster Access
         run: |
           kubectl get svc
