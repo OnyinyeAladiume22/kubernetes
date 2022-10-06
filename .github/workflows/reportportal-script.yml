@@ -36,7 +36,8 @@ jobs:
         uses: Azure/setup-kubectl@v3
         with:
           version: v1.24.0
-
+      - name: Kubectl version
+        run: kubectl version
       - name: Testing Cluster Access
         run: |
           kubectl get svc
