@@ -36,8 +36,6 @@ jobs:
         uses: Azure/setup-kubectl@v3
         with:
           version: v1.24.4
-      - name: Validating credentials
-        run: aws sts get-caller-identity 
         
       - name: Testing Cluster Access
         run: |
